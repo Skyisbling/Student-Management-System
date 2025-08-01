@@ -1,0 +1,100 @@
+{% extends "head.html" %}
+{% block content %}
+<div class="container mt-3">
+      <div class="row">
+          <div class="col-md-4">
+              <div class="card">
+  <div class="text-center bg-light text-success mt-3">
+    <h4>Student Registration Form</h4>
+  </div>
+  <div class="card-body">
+    <form action="/register" method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="name" class="form-label">Student Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="fullname"
+          placeholder="Enter your name"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="age" class="form-label">Student Age</label>
+        <input
+          type="number"
+          class="form-control"
+          id="age"
+          name="age"
+          placeholder="Enter your age"
+          required
+        />
+      </div>
+      <div class="mb-4">
+        <label for="course" class="form-label">Select Course</label>
+        <select
+          class="form-select"
+          id="course"
+          name="course"
+          required
+        >
+          <option disabled selected hidden>Choose...</option>
+          <option value="Front end developer">Front end developer</option>
+          <option value="Back end developer">Back end developer</option>
+          <option value="Full stack developer">Full stack developer</option>
+        </select>
+      </div>
+      <div class="d-grid">
+        <button type="submit" class="btn btn-success btn-lg">Enroll</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+          </div>
+          <div class="col-md-8">
+              <h2>Student Details</h2>
+              <table class="table">
+                  <thead>
+                  <tr>
+                      <th scope="col">sno</th>
+                      <th scope="col">Full Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Age</th>
+                      <th scope="col">Course</th>
+                      <th scope="col">Update</th>
+                      <th scope="col">Delete</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% for i in data %}
+                  <tr>
+                      <th scope="row">{{i.id}}</th>
+                      <td>{{i.name}}</td>
+                      <td>{{i.email}}</td>
+                      <td>{{i.age}}</td>
+                      <td>{{i.course}}</td>
+                      <td><a href="/update/{{i.id}}" class="btn btn-outline-dark btn-sm">Edit</a></td>
+                      <td><a href="/delete/{{i.id}}" class="btn btn-outline-dark btn-sm">Delete</a></td>
+                  </tr>
+                  {% endfor %}
+
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+{% endblock %}

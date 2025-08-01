@@ -1,0 +1,79 @@
+{% extends "head.html" %}
+{% block content %}
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+  <div class="text-center bg-light text-success mt-3">
+    <h4>Update Student Registration Form</h4>
+  </div>
+
+  <div class="card-body">
+    <form action="/update/{{data.id}}" method="post">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label for="name" class="form-label">Student Name</label>
+        <input
+          class="form-control"
+          type="text"
+          name="fullname"
+          id="name"
+          value="{{data.name}}"
+          placeholder="Enter your name"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          class="form-control"
+          type="email"
+          name="email"
+          id="email"
+          value="{{data.email}}"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="age" class="form-label">Student Age</label>
+        <input
+          class="form-control"
+          type="number"
+          name="age"
+          id="age"
+          value="{{data.age}}"
+          placeholder="Enter your age"
+          required
+        />
+      </div>
+
+      <div class="mb-4">
+        <label for="course" class="form-label">Select Course</label>
+        <select
+          id="course"
+          class="form-select"
+          name="course"
+          required
+        >
+          <option value="Front end developer" {%if data.course == "Front end developer"%}selected{% endif %}>Front end developer</option>
+          <option value="Back end developer" {%if data.course == "Back end developer"%}selected{% endif %}>Back end developer</option>
+          <option value="Full stack developer" {%if data.course == "Full stack developer"%}selected{% endif %}>Full stack developer</option>
+        </select>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-success btn-lg">Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+        </div>
+
+      </div>
+    </div>
+{% endblock %}

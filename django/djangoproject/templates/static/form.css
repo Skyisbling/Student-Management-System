@@ -1,0 +1,14 @@
+/* Extend .card-title block styling */
+.card-title {
+  text-align: center;             /* centers all children */
+  background-color: #f8f9fa;      /* same as bg-light */
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6; /* subtle divider */
+}
+
+/* Optional: tighten h4 spacing inside .card-title */
+.card-title h4 {
+  color: #198754; /* same as text-success */
+  margin: 0;
+  font-weight: 600;
+}
