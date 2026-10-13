@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Starry Night | Living Canvas</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #06143c;
+}
+
+body {
+    display: grid;
+    place-items: center;
+}
+
+.canvas {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #09245f;
+}
+
+svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.sky {
+    fill: url(#skyGradient);
+}
+
+.brush {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation: drift 18s ease-in-out infinite alternate;
+}
+
+.blue {
+    stroke: #1553a6;
+    stroke-width: 12;
+}
+
+.cyan {
+    stroke: #44b9ed;
+    stroke-width: 8;
+}
+
+.pale {
+    stroke: #a1e6f5;
+    stroke-width: 5;
+}
+
+.deep {
+    stroke: #071b58;
+    stroke-width: 9;
+}
+
+.green {
+    stroke: #87c96b;
+    stroke-width: 4;
+}
+
+.star-glow {
+    fill: #ffe94d;
+    opacity: .22;
+    filter: url(#glow);
+}
+
+.star-ring {
+    fill: none;
+    stroke-linecap: round;
+    stroke-width: 5;
+    animation: breathe 4s ease-in-out infinite alternate;
+}
+
+.star-ring:nth-child(even) {
+    animation-delay: -2s;
+}
+
+.star-core {
+    fill: #ffda39;
+    filter: url(#glow);
+}
+
+.moon {
+    fill: url(#moonGradient);
+    filter: url(#glow);
+}
+
+.cypress {
+    fill: url(#treeGradient);
+    stroke: #101d17;
+    stroke-width: 3;
+    stroke-linejoin: round;
+}
+
+.tree-stroke {
+    fill: none;
+    stroke: #253c2c;
+    stroke-width: 5;
+    stroke-linecap: round;
+}
+
+.village {
+    fill: #101c35;
+    stroke: #17294a;
+    stroke-width: 2;
+}
+
+@keyframes drift {
+    from { transform: translateX(-2px) translateY(0); }
+    to   { transform: translateX(3px) translateY(-2px); }
+}
+
+@keyframes breathe {
+    from { opacity: .65; }
+    to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="canvas">
+<svg viewBox="0 0 1536 1024"
+     preserveAspectRatio="xMidYMid slice"
+     xmlns="http://www.w3.org/2000/svg">
+
+<defs>
+    <linearGradient id="skyGradient" x1="0" y1="0" x2="0.2" y2="1">
+        <stop offset="0%" stop-color="#07184e"/>
+        <stop offset="45%" stop-color="#103d91"/>
+        <stop offset="100%" stop-color="#1265ad"/>
+    </linearGradient>
+
+    <radialGradient id="moonGradient">
+        <stop offset="0%" stop-color="#fffba0"/>
+        <stop offset="45%" stop-color="#ffe64d"/>
+        <stop offset="75%" stop-color="#ffb51e"/>
+        <stop offset="100%" stop-color="#ffcf39"/>
+    </radialGradient>
+
+    <linearGradient id="treeGradient" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#07170f"/>
+        <stop offset="55%" stop-color="#172b20"/>
+        <stop offset="100%" stop-color="#101d19"/>
+    </linearGradient>
+
+    <filter id="glow" x="-100%" y="-100%"
+            width="300%" height="300%">
+        <feGaussianBlur stdDeviation="9" result="blur"/>
+        <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+    </filter>
+
+    <filter id="paintTexture" x="0" y="0" width="100%" height="100%">
+        <feTurbulence type="fractalNoise"
+            baseFrequency=".035"
+            numOctaves="2" seed="8" result="noise"/>
+        <feDisplacementMap in="SourceGraphic"
+            in2="noise" scale="5"/>
+    </filter>
+
+    <g id="star">
+        <circle class="star-glow" r="43"/>
+        <circle class="star-ring" r="35"
+            stroke="#c9f1a0"/>
+        <circle class="star-ring" r="27"
+            stroke="#f2e95e" stroke-width="7"/>
+        <circle class="star-ring" r="19"
+            stroke="#e0f5b2" stroke-width="6"/>
+        <circle class="star-core" r="11"/>
+        <path d="M-32,-4 Q-15,-27 1,-30
+                 Q26,-23 32,-2 Q17,20 -4,29
+                 Q-28,18 -32,-4Z"
+            fill="none" stroke="#70c7e7"
+            stroke-width="4"/>
+    </g>
+
+    <g id="smallStar">
+        <circle r="24" fill="#ffe64c" opacity=".2"
+            filter="url(#glow)"/>
+        <circle r="18" fill="none"
+            stroke="#d6f4c2" stroke-width="5"/>
+        <circle r="11" fill="none"
+            stroke="#fff080" stroke-width="5"/>
+        <circle r="5" fill="#ffd632"/>
+    </g>
+</defs>
+
+<!-- Deep blue night -->
+<rect width="1536" height="1024" class="sky"/>
+
+<!-- Horizontal, hand-painted sky strokes -->
+<g filter="url(#paintTexture)">
+<g class="brush blue">
+    <path d="M-30 30 Q120 5 235 27 T475 30 T730 26 T1000 25 T1300 28 T1580 12"/>
+    <path d="M-20 75 Q130 45 275 67 T540 68 T800 65 T1070 70 T1350 56 T1570 64"/>
+    <path d="M-40 115 Q130 88 270 112 T510 111 T780 105 T1050 112 T1310 103 T1580 108"/>
+    <path d="M-20 160 Q120 137 275 151 T540 150 T830 145 T1110 155 T1390 142 T1570 150"/>
+    <path d="M-30 210 Q130 180 300 207 T570 205 T850 200 T1140 208 T1400 193 T1570 202"/>
+    <path d="M-30 270 Q120 245 270 265 T530 265 T820 257 T1100 264 T1390 255 T1580 260"/>
+    <path d="M-20 320 Q130 293 280 317 T550 310 T830 309 T1100 314 T1370 301 T1570 308"/>
+</g>
+
+<g class="brush cyan">
+    <path d="M-40 15 Q70 50 170 22 T390 25"/>
+    <path d="M430 85 Q550 112 660 76 T900 80"/>
+    <path d="M790 165 Q920 136 1050 169 T1270 165"/>
+    <path d="M-20 190 Q120 220 220 188 T390 193"/>
+    <path d="M500 260 Q640 285 790 248 T1020 252"/>
+    <path d="M1100 225 Q1250 250 1390 218 T1580 224"/>
+    <path d="M-30 345 Q100 370 230 340 T440 344"/>
+</g>
+
+<g class="brush pale">
+    <path d="M20 45 Q120 15 200 42"/>
+    <path d="M470 45 Q550 25 630 49"/>
+    <path d="M690 130 Q780 105 855 131"/>
+    <path d="M1040 42 Q1130 15 1200 45"/>
+    <path d="M1260 355 Q1360 330 1450 355"/>
+    <path d="M20 285 Q100 306 180 283"/>
+    <path d="M400 315 Q500 337 600 313"/>
+</g>
+
+<g class="brush deep">
+    <path d="M-20 95 Q100 72 220 100 T460 94 T710 102 T960 91 T1210 99 T1580 90"/>
+    <path d="M-30 235 Q90 212 230 239 T500 230 T760 237 T1050 229 T1340 237 T1580 226"/>
+    <path d="M-20 300 Q130 278 270 300 T550 292 T840 299 T1120 287 T1390 297 T1570 289"/>
+</g>
+</g>
+
+<!-- Great swirling celestial current -->
+<g filter="url(#paintTexture)">
+    <g class="brush blue">
+        <path d="M-70 440
+            C100 340 230 430 340 475
+            C460 525 520 425 610 350
+            C710 265 850 215 1000 270
+            C1135 319 1190 435 1100 510
+            C1030 570 925 542 890 475
+            C850 410 900 350 970 365
+            C1050 382 1060 460 1008 485
+            C965 502 937 460 960 437"
+            stroke-width="27"/>
+
+        <path d="M-50 485
+            C140 385 255 475 365 515
+            C480 555 565 453 655 375
+            C745 297 855 275 958 312
+            C1080 356 1130 426 1070 470"
+            stroke-width="15"/>
+
+        <path d="M-30 525
+            C130 435 250 525 370 560
+            C490 600 570 505 650 432
+            C740 350 840 330 920 365"
+            stroke-width="13"/>
+
+        <path d="M500 600
+            C640 680 760 695 900 625
+            C1030 560 1080 495 1170 500
+            C1260 505 1280 590 1220 630
+            C1165 667 1110 620 1145 590
+            C1170 570 1195 590 1180 608"
+            stroke-width="24"/>
+
+        <path d="M660 645
+            C800 740 950 710 1080 660
+            C1210 610 1310 540 1410 555
+            C1500 568 1520 625 1570 640"
+            stroke-width="16"/>
+    </g>
+
+    <g class="brush cyan">
+        <path d="M-40 430
+            C110 360 240 432 355 470
+            C470 508 530 412 625 340
+            C725 260 855 237 990 280
+            C1100 315 1165 412 1110 478"
+            stroke-width="11"/>
+
+        <path d="M-20 470
+            C120 390 255 468 365 500
+            C480 535 555 440 650 370
+            C745 300 855 285 940 318"
+            stroke-width="10"/>
+
+        <path d="M560 545
+            C680 625 780 635 880 580
+            C985 520 1010 455 1060 475
+            C1110 493 1090 535 1055 535"
+            stroke-width="12"/>
+
+        <path d="M750 695
+            C900 735 1020 680 1160 615
+            C1280 560 1400 555 1540 600"
+            stroke-width="11"/>
+    </g>
+
+    <g class="brush pale">
+        <path d="M-30 400
+            C110 350 220 405 335 450
+            C465 500 530 395 630 325
+            C745 245 870 230 990 280"
+            stroke-width="7"/>
+
+        <path d="M-20 440
+            C125 390 245 448 350 480
+            C475 520 560 420 660 350
+            C755 285 860 270 930 302"
+            stroke-width="5"/>
+
+        <path d="M585 575
+            C710 650 800 655 900 590
+            C990 530 1030 478 1060 493"
+            stroke-width="6"/>
+
+        <path d="M680 710
+            C840 742 970 687 1110 625
+            C1250 565 1400 565 1535 610"
+            stroke-width="7"/>
+    </g>
+
+    <g class="brush deep">
+        <path d="M-40 420
+            C100 350 220 425 340 465
+            C460 510 530 425 610 365"
+            stroke-width="10"/>
+
+        <path d="M630 320
+            C760 220 905 230 1020 292
+            C1115 345 1150 415 1100 455"
+            stroke-width="12"/>
+
+        <path d="M550 565
+            C690 665 790 680 910 610
+            C1010 550 1050 500 1080 510"
+            stroke-width="9"/>
+
+        <path d="M750 720
+            C900 760 1050 690 1190 630
+            C1320 575 1440 580 1570 620"
+            stroke-width="10"/>
+    </g>
+</g>
+
+<!-- Smaller swirling eddies -->
+<g class="brush">
+    <path d="M690 380 Q735 335 785 360 Q830 390 790 425 Q760 448 740 425"
+        stroke="#4cb5e5" stroke-width="9"/>
+
+    <path d="M720 392 Q755 358 785 385 Q810 408 780 425"
+        stroke="#b0ecf6" stroke-width="5"/>
+
+    <path d="M1000 560 Q1040 515 1085 542 Q1115 567 1080 593"
+        stroke="#48aee0" stroke-width="8"/>
+
+    <path d="M1015 562 Q1040 535 1065 553 Q1085 572 1060 581"
+        stroke="#b5edf4" stroke-width="5"/>
+
+    <path d="M1250 425 Q1300 395 1335 423 Q1360 448 1325 468"
+        stroke="#65c5ed" stroke-width="7"/>
+
+    <path d="M1270 429 Q1300 410 1320 432"
+        stroke="#d0f1f5" stroke-width="4"/>
+</g>
+
+<!-- Stars: positions follow the reference composition -->
+<g transform="translate(215 75) scale(1.25)">
+    <use href="#star"/>
+</g>
+
+<g transform="translate(420 53) scale(.65)">
+    <use href="#star"/>
+</g>
+
+<g transform="translate(615 65) scale(1.05)">
+    <use href="#star"/>
+</g>
+
+<g transform="translate(748 94) scale(.7)">
+    <use href="#star"/>
+</g>
+
+<g transform="translate(1038 123) scale(1.12)">
+    <use href="#star"/>
+</g>
+
+<g transform="translate(1440 165) scale(1.8)">
+    <use href="#star"/>
+</g>
+
+<g transform="translate(410 225) scale(1.05)">
+    <use href="#star"/>
+</g>
+
+<g transform="translate(1225 303) scale(.8)">
+    <use href="#star"/>
+</g>
+
+<g transform="translate(590 454) scale(.45)">
+    <use href="#star"/>
+</g>
+
+<g transform="translate(620 630) scale(1.4)">
+    <use href="#star"/>
+</g>
+
+<g transform="translate(225 660) scale(.85)">
+    <use href="#star"/>
+</g>
+
+<g transform="translate(38 632) scale(.6)">
+    <use href="#star"/>
+</g>
+
+<!-- Extra starry highlights -->
+<g>
+    <path d="M180 40 Q220 70 250 45 M180 100 Q215 130 250 108"
+        fill="none" stroke="#6cc8f0" stroke-width="6"
+        stroke-linecap="round"/>
+
+    <path d="M1010 85 Q1050 58 1080 89 M1005 145 Q1040 170 1085 145"
+        fill="none" stroke="#b1e7ed" stroke-width="5"
+        stroke-linecap="round"/>
+
+    <path d="M1370 120 Q1430 85 1490 125 M1375 205 Q1435 245 1490 208"
+        fill="none" stroke="#fff17b" stroke-width="7"
+        stroke-linecap="round"/>
+
+    <path d="M380 200 Q410 175 445 205 M380 245 Q415 275 450 245"
+        fill="none" stroke="#c0ebd7" stroke-width="5"
+        stroke-linecap="round"/>
+</g>
+
+<!-- Rolling luminous strokes at the bottom -->
+<g class="brush">
+    <path d="M-30 760
+        Q100 730 180 785
+        T360 815 T560 790 T760 820
+        T1000 775 T1230 815 T1550 765"
+        stroke="#1b67b7" stroke-width="32"/>
+
+    <path d="M-20 810
+        Q130 780 230 830
+        T460 850 T690 830 T920 850
+        T1160 810 T1390 835 T1560 815"
+        stroke="#2379c3" stroke-width="22"/>
+
+    <path d="M-30 875
+        Q130 840 240 885
+        T480 900 T730 875 T970 900
+        T1210 860 T1450 895 T1580 880"
+        stroke="#48a6db" stroke-width="16"/>
+
+    <path d="M-20 925
+        Q150 890 300 940 T600 950
+        T900 920 T1200 945 T1550 920"
+        stroke="#1b559d" stroke-width="20"/>
+
+    <path d="M40 775 Q160 745 270 790"
+        stroke="#b1e5e9" stroke-width="8"/>
+
+    <path d="M680 830 Q830 795 950 820"
+        stroke="#b5eced" stroke-width="9"/>
+
+    <path d="M1060 765 Q1200 735 1330 765"
+        stroke="#c1eff0" stroke-width="8"/>
+</g>
+
+<!-- Dark cypress tree -->
+<g>
+    <path class="cypress"
+        d="M205 1024
+        L224 895
+        L250 815
+        L274 750
+        L294 700
+        L299 655
+        L315 595
+        L326 525
+        L323 455
+        L312 405
+        L322 342
+        L320 290
+        L327 240
+        L319 198
+        L331 148
+        L333 105
+        L345 76
+        L358 104
+        L366 145
+        L354 184
+        L367 226
+        L362 275
+        L380 315
+        L372 358
+        L391 406
+        L394 465
+        L410 516
+        L409 580
+        L431 640
+        L433 700
+        L454 753
+        L449 820
+        L478 900
+        L488 1024 Z"/>
+
+    <!-- Cypress silhouette branches -->
+    <path class="cypress"
+        d="M230 1024
+        L244 890 L223 845 L245 855
+        L265 785 L251 746 L272 760
+        L284 685 L271 649 L292 663
+        L305 577 L294 538 L314 557
+        L323 470 L307 429 L328 444
+        L331 355 L318 326 L338 342
+        L335 250 L326 219 L344 238
+        L342 150 L333 120 L350 138
+        L347 102 L356 78 L364 120
+        L360 207 L372 259 L358 301
+        L373 370 L360 422 L385 480
+        L379 548 L407 620 L397 690
+        L429 770 L420 830 L462 950
+        L470 1024 Z"/>
+
+    <path class="tree-stroke"
+        d="M264 1024 Q285 860 303 735 T336 475 T347 125"/>
+
+    <path class="tree-stroke"
+        d="M315 1024 Q345 870 365 735 T359 490"/>
+
+    <path class="tree-stroke"
+        d="M390 1024 Q370 900 400 820 T402 650"/>
+
+    <path class="tree-stroke"
+        d="M245 955 Q285 925 290 875"/>
+
+    <!-- Small adjacent cypress -->
+    <path class="cypress"
+        d="M420 1024 L437 914 L446 845
+        L456 793 L454 744 L468 708
+        L475 753 L470 816 L485 860
+        L488 920 L505 1024 Z"/>
+</g>
+
+<!-- Tiny village silhouettes along the bottom -->
+<g class="village">
+    <path d="M0 1000 L0 960 L30 944 L55 960
+        L55 982 L85 982 L85 950 L110 932
+        L143 955 L143 1000 Z"/>
+
+    <path d="M65 1024 L65 978 L105 953
+        L143 978 L143 1024 Z"/>
+
+    <path d="M485 1024 L485 982 L510 965
+        L540 983 L540 1024 Z"/>
+
+    <path d="M530 1024 L530 996 L558 980
+        L590 997 L590 1024 Z"/>
+
+    <path d="M1450 1024 L1450 990 L1480 968
+        L1510 990 L1510 1024 Z"/>
+
+    <path d="M1490 1024 L1490 1000 L1515 980
+        L1536 994 L1536 1024 Z"/>
+</g>
+
+<!-- Final hand-painted accents -->
+<g class="brush pale">
+    <path d="M-10 395 Q40 415 95 440"/>
+    <path d="M60 480 Q120 500 160 520"/>
+    <path d="M480 690 Q530 710 570 705"/>
+    <path d="M700 745 Q780 755 850 730"/>
+    <path d="M1000 690 Q1090 670 1150 640"/>
+    <path d="M1280 565 Q1380 525 1470 530"/>
+</g>
+
+</svg>
+</div>
+</body>
+</html>
